@@ -1,0 +1,51 @@
+body{
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  overflow: hidden}
+#piano{
+  width:100vw;
+  height: 100vh;
+  background: red
+}
+#piano-header{
+  height: 40%;
+  background: lightcoral
+}
+#keys{
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-flow: row wrap;
+  background: lightgray;
+}
+.key{ 
+  text-align: center;
+  align-content: end;
+  font-size: 400%;
+  font-family: serif}
+.white{
+  background: white;
+  width: 12.5%;
+  outline: 1px solid black
+}
+.black .active{
+  background: #006;
+  color: #eee;
+}
+.black{
+  background: black;
+  position: absolute;
+  height: 40%;
+  width: 6.25%;
+  color: white
+}
+.white .active{
+  background: #ccf;
+  color: #113
+}
+#w{left: 9.375%}
+#e{left: 21.875%}
+#t{left: 46.875%}
+#y{left: 59.375%}
+#u{left: 71.875%}
