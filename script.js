@@ -1,4 +1,4 @@
-import 'https://cdn.jsdelivr.net/npm/spessasynth_core@4.2.7/dist/index.min.js';
+import { Synth } from 'https://cdn.jsdelivr.net/npm/spessasynth_core@4.2.7/dist/index.min.js';
 
 const audioContext = new AudioContext();
 let synth = null;
