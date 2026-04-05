@@ -23,7 +23,7 @@ function screenFull(){
     addMessage("Pantalla Completa Desacticada")
   }
   else{
-    document.documentElement.requestFullscreen();
+    document.body.requestFullscreen();
     addMessage("Pantalla Completa Activada")
   }
 }
