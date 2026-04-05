@@ -19,9 +19,8 @@ Soundfont.instrument(ac, soundfont).then(inst => {
 changeSoundfont("acoustic_grand_piano")
 function screenFull(){
   let box = document.getElementById("check").classList;
-  alert("You know what box is, right?");
   if(box.contains("true"){
-    if(document.exitFullscreen){document.exitFullscreeen()}
+    if(document.exitFullscreen){document.exitFullscreen()}
     addMessage("Pantalla Completa Desactivada");
     box.remove("true");
   }
