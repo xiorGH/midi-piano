@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIDI Piano</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="piano">
+      <div id="piano-header">
+        <p id="message">Placeholdery Thing</p>
+        <div id="fs" onclick="screenFull()"><span id="check"></span><p id="tag">FULLSCREEN</p></div>
+      </div>
+      <div id="keys">
+        <div class="key white" id="a">a</div>
+        <div class="key black" id="w">w</div>
+        <div class="key white" id="s">s</div>
+        <div class="key black" id="e">e</div>
+        <div class="key white" id="d">d</div>
+        <div class="key white" id="f">f</div>
+        <div class="key black" id="t">t</div>
+        <div class="key white" id="g">g</div>
+        <div class="key black" id="y">y</div>
+        <div class="key white" id="h">h</div>
+        <div class="key black" id="u">u</div>
+        <div class="key white" id="j">j</div>
+        <div class="key white" id="k">k</div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/soundfont-player@0.12.0/dist/soundfont-player.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

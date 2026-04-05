@@ -4,7 +4,7 @@ body{
   user-select: none;
   overflow: hidden}
 #piano{
-  width:100vw;
+  width: 100vw;
   height: 100vh;
   background: red
 }
@@ -13,15 +13,40 @@ body{
   background: black;
   text-align: center;
 }
-#message{
+#fs{
   position: fixed;
+  top:0;
+  left:0;
+  z-index: 0;
+}
+#tag{
+  margin:0;
+  margin-left: 4vw;
+  color:white;
+  font-family: serif;
+  font-weight: bold;
+  font-size: 4vw;}
+#check{
+  position: absolute;
+  top: 0.6vw;
+  left: 1vw;
+  width: 3vw;
+  height: 3vw;
+  background: gray;
+  border-radius: 50%;
+}
+check.true{background: red}
+#message{
+  margin: 0;
+  position: fixed;
+  z-index: 1;
   width: 100vw;
-  font-size: 5vw;
+  font-size: 2vw;
   font-family: monospace;
-  top: 0;
-  transition: 1s;
-  color: #007;
-  background: #EEF;
+  top: -12vh;
+  transition: 0.4s;
+  color: #00A;
+  background: #AAF;
 }
 #message.show{top: 0}
 #keys{
