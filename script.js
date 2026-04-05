@@ -32,5 +32,5 @@ function playNote(key){
 window.addEventListener("keydown", playNote, e.key);
 let tiles = document.querySelectorAll(".key");
 for(let x = 0; x < tiles.length; x++){
-  tiles[x].addEventListener("ontouchstart", playNote, tiles[x].id)
+  tiles[x].addEventListener("touchstart", playNote, tiles[x].id)
 }
