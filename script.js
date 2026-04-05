@@ -4,7 +4,6 @@ let piano = null;
 function changeSoundfont(soundfont){
 Soundfont.instrument(ac, soundfont).then(inst => {
   piano = inst;
-  document.getElementById('play-btn').disabled = false;
   alert('¡Piano cargado!');
 })}
 changeSoundfont("acoustic_grand_piano")
