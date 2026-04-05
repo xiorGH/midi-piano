@@ -26,8 +26,8 @@ function playNote(key){
   alert(notes[key]);
   ac.resume().then( () => {if (notes[key] && piano) piano.play(notes[key])})
 }
-window.addEventListener("keydown", playNote, e.key);
+window.addEventListener("keydown", () => {playNote(e.key.toLowerCase())});
 let tiles = document.querySelectorAll(".key");
 for(let x = 0; x < tiles.length; x++){
-  tiles[x].addEventListener("touchstart", playNote, tiles[x].id)
+  tiles[x].addEventListener("touchstart", () => {playNote(tiles[x].id)})
 }
