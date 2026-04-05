@@ -1,5 +1,6 @@
 const ac = new AudioContext();
 let piano = null;
+var octave = 4;
 function addMessage(txt){
   let msg = document.getElementById("message");
   var time;
@@ -31,25 +32,37 @@ function screenFull(){
   }
 }
 const notes = {
-  a: "C4",
-  w: "C#4",
-  s: "D4",
-  e: "D#4",
-  d: "E4",
-  f: "F4",
-  t: "F#4",
-  g: "G4",
-  y: "G#4",
-  h: "A4",
-  u: "A#4",
-  j: "B4",
-  k: "C5"
+  a: "C",
+  w: "C#",
+  s: "D",
+  e: "D#",
+  d: "E",
+  f: "F",
+  t: "F#",
+  g: "G",
+  y: "G#",
+  h: "A",
+  u: "A#",
+  j: "B",
+  k: "C"
 };
 let tiles = document.querySelectorAll(".key");
+function changeOctave(up){
+  if(up){
+    if(octave === 7){octave = 1}
+    else{octave++}
+  }
+  else{
+    if(octave === 1){octave = 7}
+    else{octave--}
+  }
+  document.getElementById("counter").textContent = octave
+}
 function playNote(key){
   if (!piano) return alert("Aún cargando el soundfont");
   ac.resume().then( () => {if (notes[key] && piano){ 
-    piano.play(notes[key]);
+    if(key === "k"){piano.play(notes[key] + (octave + 1))}
+    else{piano.play(notes[key] + octave)}
     document.getElementById(key).classList.add("active");
   }})
 }

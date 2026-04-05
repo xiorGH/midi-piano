@@ -15,8 +15,8 @@ body{
 }
 #fs{
   position: fixed;
-  top:0;
-  left:0;
+  top: 30vh;
+  left: 0;
   z-index: 0;
 }
 #tag{
@@ -36,6 +36,25 @@ body{
   border-radius: 50%;
 }
 #check.true{background: red}
+#eight{
+  position: fixed;
+  display: flex;
+  top: 30.5vh;
+  right: 0.5vw;
+  z-index: 0;
+}
+#eight button{
+  width: 3.5vw;
+  height: 3.5vw;
+}
+#counter{
+  display: inline-block;
+  background: white;
+  width: 8vw;
+  font-size: 7vh;
+  height: 7.9vh;
+  border: 1px solid gray
+}
 #message{
   margin: 0;
   position: fixed;
