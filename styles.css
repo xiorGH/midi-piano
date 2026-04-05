@@ -46,7 +46,10 @@ body{
 #eight button, #counter{
   width: 3.5vw;
   height: 3.5vw;
-  font-size: 3vh;
+  margin: 0;
+  font-size: 4vh;
+  line-height: 3.5vw;
+  vertical-align: bottom;
   font-family: sans-serif;
   border: 1px solid gray
 }
