@@ -1,13 +1,11 @@
 const ac = new AudioContext();
 let piano = null;
-alert("Code start")
 function changeSoundfont(soundfont){
 Soundfont.instrument(ac, soundfont).then(inst => {
   piano = inst;
   alert('¡Piano cargado!');
 })}
 changeSoundfont("acoustic_grand_piano")
-alert("Code final")
 const notes = {
   a: "C4",
   w: "C#4",
@@ -25,6 +23,7 @@ const notes = {
 };
 function playNote(key){
   if (!piano) return alert("Aún cargando el soundfont");
+  alert(notes[key]);
   ac.resume().then( () => {if (notes[key] && piano) piano.play(notes[key])})
 }
 window.addEventListener("keydown", playNote, e.key);
