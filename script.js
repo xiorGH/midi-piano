@@ -1,7 +1,6 @@
-alert("Code start")
 const ac = new AudioContext();
 let piano = null;
-alert("Code medium")
+alert("Code start")
 function changeSoundfont(soundfont){
 Soundfont.instrument(ac, soundfont).then(inst => {
   piano = inst;
