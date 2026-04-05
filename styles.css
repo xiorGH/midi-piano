@@ -51,8 +51,9 @@ body{
   display: inline-block;
   background: white;
   width: 8vw;
-  font-size: 7vh;
-  height: 7.9vh;
+  font-size: 6vh;
+  height: 7vh;
+  font-family: sans-serif;
   border: 1px solid gray
 }
 #message{
