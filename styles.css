@@ -35,7 +35,7 @@ body{
   background: gray;
   border-radius: 50%;
 }
-check.true{background: red}
+#check.true{background: red}
 #message{
   margin: 0;
   position: fixed;
