@@ -18,10 +18,10 @@ body{
   width: 100vw;
   font-size: 5vw;
   font-family: monospace;
-  top: 10vh;
+  top: -2vh;
   transition: 1s;
-  color: #009;
-  background: #DDF;
+  color: #007;
+  background: #EEF;
 }
 #message.show{top: 0}
 #keys{
