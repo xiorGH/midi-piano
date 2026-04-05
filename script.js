@@ -1,13 +1,14 @@
+alert("Code start")
 const ac = new AudioContext();
 let piano = null;
-
+alert("Code medium")
 function changeSoundfont(soundfont){
 Soundfont.instrument(ac, soundfont).then(inst => {
   piano = inst;
   alert('¡Piano cargado!');
 })}
 changeSoundfont("acoustic_grand_piano")
-
+alert("Code final")
 const notes = {
   a: "C4",
   w: "C#4",
