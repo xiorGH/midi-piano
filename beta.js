@@ -4,7 +4,7 @@ let piano = null;
 Soundfont.instrument(ac, "acoustic_grand_piano").then(inst => {
   piano = inst;
   document.getElementById('play-btn').disabled = false;
-  console.log('¡Piano cargado!');
+  alert('¡Piano cargado!');
 });
 
 // Solo suena si piano ya cargó:
