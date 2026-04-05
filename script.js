@@ -54,11 +54,14 @@ function playNote(key){
   }})
 }
 function stopNote(key){
-  document.getElementById(key).classList.remove("active")
+  document.getElementById(key).classList.remove("active");
+  piano.stop(notes[key]);
 }
 window.addEventListener("keydown", () => {playNote(e.key.toLowerCase())});
 window.addEventListener("keyup", () => {stopNote(e.key.toLowerCase())});
 for(let x = 0; x < tiles.length; x++){
-  tiles[x].addEventListener("touchstart", () => {playNote(tiles[x].id)})
+  tiles[x].addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    playNote(tiles[x].id)})
   tiles[x].addEventListener("touchend", () => {stopNote(tiles[x].id)})
 }
