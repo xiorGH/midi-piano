@@ -7,16 +7,6 @@ Soundfont.instrument(ac, "acoustic_grand_piano").then(inst => {
   alert('¡Piano cargado!');
 });
 
-// Solo suena si piano ya cargó:
-document.getElementById('play-btn').onclick = () => {
-  if (!piano) return alert("Aún cargando el soundfont");
-  ac.resume().then(() => {
-    alert(JSON.stringify(piano));
-    alert('AudioContext state:', JSON.stringify(ac.state));
-    piano.play("C4");
-    alert(JSON.stringify(piano.play("C4")))
-  });
-};
 const notes = {
   a: "C4",
   w: "C#4",
@@ -33,6 +23,8 @@ const notes = {
   k: "C5"
 };
 function playNote(key){
+  if (!piano) return alert("Aún cargando el soundfont");
+  ac.resume();
   if (notes[key] && piano) piano.play(notes[key]);
 }
 window.addEventListener("keydown", playNote, e.key);
