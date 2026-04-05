@@ -15,11 +15,13 @@ body{
 }
 #message{
   position: fixed;
-  width: 100%;
+  width: 100vw;
+  font-size: 5vw;
+  font-family: monospace;
   top: 10vh;
   transition: 1s;
-  color: #22A;
-  background: #99F;
+  color: #009;
+  background: #DDF;
 }
 #message.show{top: 0}
 #keys{
