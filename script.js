@@ -11,10 +11,10 @@ Soundfont.instrument(ac, "acoustic_grand_piano").then(inst => {
 document.getElementById('play-btn').onclick = () => {
   if (!piano) return alert("Aún cargando el soundfont");
   ac.resume().then(() => {
-    alert(piano);
-    alert('AudioContext state:', ac.state);
+    alert(JSON.stringify(piano));
+    alert('AudioContext state:', JSON.stringify(ac.state));
     piano.play("C4");
-    alert(piano.play("C4"))
+    alert(JSON.stringify(piano.play("C4")))
   });
 };
 const notes = {
