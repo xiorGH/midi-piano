@@ -15,7 +15,8 @@ body{
 }
 #message{
   position: fixed;
-  top: -2vh;
+  width: 100%;
+  top: 10vh;
   transition: 1s;
   color: #22A;
   background: #99F;
