@@ -18,10 +18,8 @@ Soundfont.instrument(ac, soundfont).then(inst => {
 })}
 changeSoundfont("acoustic_grand_piano")
 function screenFull(){
-  else{
     if(document.body.requestFullscreen){document.body.requestFullscreen()}
     addMessage("Pantalla Completa Activada")
-  }
 }
 const notes = {
   a: "C4",
