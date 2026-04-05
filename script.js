@@ -1,11 +1,13 @@
 const ac = new AudioContext();
 let piano = null;
 
-Soundfont.instrument(ac, "acoustic_grand_piano").then(inst => {
+function changeSoundfont(soundfont){
+Soundfont.instrument(ac, soundfont).then(inst => {
   piano = inst;
   document.getElementById('play-btn').disabled = false;
   alert('¡Piano cargado!');
-});
+})}
+changeSoundfont("acoustic_grand_piano")
 
 const notes = {
   a: "C4",
