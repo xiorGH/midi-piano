@@ -43,18 +43,17 @@ body{
   right: 0.5vw;
   z-index: 0;
 }
-#eight button{
+#eight button, #counter{
   width: 3.5vw;
   height: 3.5vw;
+  font-size: 3vh;
+  font-family: sans-serif;
+  border: 1px solid gray
 }
 #counter{
   display: inline-block;
   background: white;
   width: 8vw;
-  font-size: 3vh;
-  height: 3.5vh;
-  font-family: sans-serif;
-  border: 1px solid gray
 }
 #message{
   margin: 0;
