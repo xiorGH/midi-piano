@@ -23,7 +23,6 @@ const notes = {
 };
 function playNote(key){
   if (!piano) return alert("Aún cargando el soundfont");
-  alert(notes[key]);
   ac.resume().then( () => {if (notes[key] && piano) piano.play(notes[key])})
 }
 window.addEventListener("keydown", () => {playNote(e.key.toLowerCase())});
