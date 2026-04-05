@@ -1,73 +1,41 @@
-import { Synth } from 'https://cdn.jsdelivr.net/npm/spessasynth_core@4.2.7/dist/index.min.js';
+const ac = new AudioContext();
+let piano = null;
 
-const audioContext = new AudioContext();
-let synth = null;
-
-// 1. Carga del archivo
-document.getElementById('sf2-upload').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    try {
-        // Despertar el audio (Vital en móviles)
-        if (audioContext.state === 'suspended') await audioContext.resume();
-
-        const arrayBuffer = await file.arrayBuffer();
-        
-        // Creamos el sintetizador
-        synth = new Synth(audioContext, arrayBuffer);
-        
-        alert("¡LOGRADO! Piano listo: " + file.name);
-    } catch (err) {
-        // Si el error es vacío, esto nos dirá qué tipo de objeto es
-        alert("Error detallado: " + (err.message || err.name || "Error desconocido de acceso"));
-        console.error(err);
-    }
+Soundfont.instrument(ac, "acoustic_grand_piano").then(inst => {
+  piano = inst;
+  document.getElementById('play-btn').disabled = false;
+  console.log('¡Piano cargado!');
 });
 
-// 2. Mapa de notas (Basado en tus IDs del HTML)
-const midiMap = {
-    'a': 60, 'w': 61, 's': 62, 'e': 63, 'd': 64, 
-    'f': 65, 't': 66, 'g': 67, 'y': 68, 'h': 69, 
-    'u': 70, 'j': 71, 'k': 72
+// Solo suena si piano ya cargó:
+document.getElementById('play-btn').onclick = () => {
+  if (!piano) return alert("Aún cargando el soundfont");
+  ac.resume().then(() => {
+    console.log(piano);
+    alert('AudioContext state:', ac.state);
+    piano.play("C4");
+  });
 };
-
-// 3. Funciones de sonido (Sustain incluido)
-function tocar(nota, id) {
-    if (!synth) return;
-    synth.noteOn(0, nota, 100);
-    document.getElementById(id)?.classList.add('active');
+const notes = {
+  a: "C4",
+  w: "C#4",
+  s: "D4",
+  e: "D#4",
+  d: "E4",
+  f: "F4",
+  t: "F#4",
+  g: "G4",
+  y: "G#4",
+  h: "A4",
+  u: "A#4",
+  j: "B4",
+  k: "C5"
+};
+function playNote(key){
+  if (notes[key] && piano) piano.play(notes[key]);
 }
-
-function soltar(nota, id) {
-    if (!synth) return;
-    synth.noteOff(0, nota);
-    document.getElementById(id)?.classList.remove('active');
+window.addEventListener("keydown", playNote, e.key);
+let tiles = document.querySelectorAll(".key");
+for(let x = 0; x < tiles.length; x++){
+  tiles[x].addEventListener("ontouchstart", playNote, tiles[x].id)
 }
-
-// 4. Eventos de Teclado
-window.addEventListener('keydown', (e) => {
-    const key = e.key.toLowerCase();
-    if (midiMap[key] && !e.repeat) tocar(midiMap[key], key);
-});
-
-window.addEventListener('keyup', (e) => {
-    const key = e.key.toLowerCase();
-    if (midiMap[key]) soltar(midiMap[key], key);
-});
-
-// 5. Eventos Táctiles (Móviles)
-Object.keys(midiMap).forEach(key => {
-    const el = document.getElementById(key);
-    if (el) {
-        el.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            tocar(midiMap[key], key);
-        }, {passive: false});
-
-        el.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            soltar(midiMap[key], key);
-        }, {passive: false});
-    }
-});
