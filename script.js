@@ -4,16 +4,17 @@ let piano = null;
 Soundfont.instrument(ac, "acoustic_grand_piano").then(inst => {
   piano = inst;
   document.getElementById('play-btn').disabled = false;
-  console.log('¡Piano cargado!');
+  alert('¡Piano cargado!');
 });
 
 // Solo suena si piano ya cargó:
 document.getElementById('play-btn').onclick = () => {
   if (!piano) return alert("Aún cargando el soundfont");
   ac.resume().then(() => {
-    console.log(piano);
+    alert(piano);
     alert('AudioContext state:', ac.state);
     piano.play("C4");
+    alert(piano.play("C4"))
   });
 };
 const notes = {
