@@ -1,15 +1,14 @@
-<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MIDI Piano</title>
-    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div id="piano">
       <div id="piano-header">
         <input type="file" id="sf2-upload"/>
+        <button id="play-btn">C4</button>
       </div>
       <div id="keys">
         <div class="key white" id="a">a</div>
@@ -27,7 +26,7 @@
         <div class="key white" id="k">k</div>
       </div>
     </div>
-
-    <script type="module" src="script.js"></script>
   </body>
+  <script src="https://raw.githubusercontent.com/danigb/soundfont-player/refs/heads/master/lib/index.js"></script>
+  <script src="script.js"></script>
 </html>
