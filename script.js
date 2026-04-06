@@ -28,7 +28,7 @@ function changeSoundfont(soundfont){
     }
   }
   if(!instruments.includes(soundfont))  {
-    addMessage("Soundfont no Disponible. Prueba con Otra");
+    addMessage("Soundfont no Disponible. Prueba con Otro");
     return;
   }
   addMessage("Cargando Soundfont. Espere unos Segundos");
@@ -47,7 +47,8 @@ const load = setInterval(() => {
     return console.log("Loading…")}
   changeSoundfont("acoustic_grand_piano");
   document.getElementById("search").value = "acoustic_grand_piano";
-  document.getElementById("changer").addEventListener("click", () => {changeSoundfont(document.getElementById("search").value)});
+  document.getElementById("search").addEventListener("keydown", (e) => {if(e.key === "Enter"){changeSoundfont(document.getElementById("search").value})})
+  document.getElementById("changer").addEventListener("click", () => {changeSoundfont(document.getElementById("search").value)})
   clearInterval(load)
 }, 1000)
 function screenFull(){
