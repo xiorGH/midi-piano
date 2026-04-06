@@ -34,7 +34,6 @@ function changeSoundfont(soundfont){
   addMessage("Cargando Soundfont. Espere unos Segundos");
 Soundfont.instrument(ac, soundfont).then(inst => {
   piano = inst;
-  console.log(JSON.stringify(piano));
   addMessage("Soundfont Cargado y Listo para Usar");
 })}
 addMessage("Importando Soundfonts")
@@ -91,26 +90,102 @@ function changeOctave(up){
   }
   document.getElementById("counter").textContent = octave
 }
-var playing;
+const playing = [];
 function playNote(key){
   key = key.toLowerCase();
   if (!piano){return addMessage("Soundfont Pendiente")}
   ac.resume().then( () => {if (notes[key] && piano){ 
-    if(key === "k"){playing = piano.play(notes[key] + (octave + 1))}
-    else{playing = piano.play(notes[key] + octave)}
+    var id;
+    if(key === "k"){id = notes[key] + (octave + 1)}
+    else{id = notes[key] + octave}
+    const note = piano.play(id);
+    note.id = id;
+    playing.push(note)
     document.getElementById(key).classList.add("active");
   }})
 }
 function stopNote(key){
-  if(!playing){return}
-  playing.stop(ac.currentTime + 0.2);
+  var id;
+  if(key === "k"){id = notes[key] + (octave + 1)}
+  else{id = notes[key] + octave}
+  var note;
+  for(let x = 0; x < playing.length; x++){
+    if(playing[x].id === id){
+      note = x;
+      break;
+    }
+  }
+  playing[note].stop(ac.currentTime + 0.2);
+  playing.splice(note, 1);
   document.getElementById(key).classList.remove("active");
 }
-window.addEventListener("keydown", () => {playNote(e.key)});
-window.addEventListener("keyup", () => {stopNote(e.key)});
-for(let x = 0; x < tiles.length; x++){
-  tiles[x].addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    playNote(tiles[x].id)})
-  tiles[x].addEventListener("touchend", () => {stopNote(tiles[x].id)})
+window.addEventListener("keydown", (e) => {playNote(e.key)})
+window.addEventListener("keyup", (e) => {stopNote(e.key)});
+// Objeto para rastrear qué tecla tiene cada dedo (soporta múltiples dedos)
+let activeTouches = {}; 
+
+function getElementFromTouch(touch) {
+  return document.elementFromPoint(touch.clientX, touch.clientY);
 }
+
+const keysContainer = document.getElementById("keys");
+
+keysContainer.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  // Iteramos por todos los dedos nuevos que tocaron la pantalla
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    const el = getElementFromTouch(touch);
+    
+    if (el && el.classList.contains("key")) {
+      activeTouches[touch.identifier] = el.id;
+      playNote(el.id);
+    }
+  }
+}, { passive: false });
+
+keysContainer.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    const el = getElementFromTouch(touch);
+    const lastKeyId = activeTouches[touch.identifier];
+
+    if (el && el.classList.contains("key")) {
+      const newKeyId = el.id;
+      // Si el dedo se movió a una tecla distinta
+      if (newKeyId !== lastKeyId) {
+        if (lastKeyId) stopNote(lastKeyId); // Apaga la tecla anterior de ESTE dedo
+        activeTouches[touch.identifier] = newKeyId;
+        playNote(newKeyId);
+      }
+    } else if (lastKeyId) {
+      // Si el dedo se salió de las teclas
+      stopNote(lastKeyId);
+      delete activeTouches[touch.identifier];
+    }
+  }
+}, { passive: false });
+
+keysContainer.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    const lastKeyId = activeTouches[touch.identifier];
+    if (lastKeyId) {
+      stopNote(lastKeyId);
+      delete activeTouches[touch.identifier];
+    }
+  }
+});
+
+keysContainer.addEventListener("touchcancel", (e) => {
+  // Maneja interrupciones (como una notificación o salir de la app)
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    if (activeTouches[touch.identifier]) {
+      stopNote(activeTouches[touch.identifier]);
+      delete activeTouches[touch.identifier];
+    }
+  }
+});
