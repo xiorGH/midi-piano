@@ -1,6 +1,16 @@
 const ac = new AudioContext();
 let piano = null;
 var octave = 4;
+var instruments;
+fetch("https://raw.githubusercontent.com/danigb/soundfont-player/master/names/fluidR3.json").then(response => {
+  if(!response.ok){console.log("Couldn't fetch")}
+  return response.json();
+})
+.then(data => {
+  instruments = data;
+  for(let x = 0; x < instruments.length; x++){document.getElementById("sound").innerHTML += `<option>${instruments[x]}</option>`;
+  }
+})
 function addMessage(txt){
   let msg = document.getElementById("message");
   var time;
@@ -12,12 +22,34 @@ function addMessage(txt){
   time = setTimeout(() => {msg.classList.remove("show")}, 2000)}, 450)
 }
 function changeSoundfont(soundfont){
-  addMessage("Cargando Sounfont. Espere unos Segundos")
+  if(piano){
+    if(piano.name === soundfont){
+     return addMessage("Soundfont ya Aplicado");
+    }
+  }
+  if(!instruments.includes(soundfont))  {
+    addMessage("Soundfont no Disponible. Prueba con Otra");
+    return;
+  }
+  addMessage("Cargando Soundfont. Espere unos Segundos");
 Soundfont.instrument(ac, soundfont).then(inst => {
   piano = inst;
+  console.log(JSON.stringify(piano));
   addMessage("Soundfont Cargado y Listo para Usar");
 })}
-changeSoundfont("acoustic_grand_piano")
+addMessage("Importando Soundfonts")
+const load = setInterval(() => {
+  if(!instruments){
+    if(!navigator.online){
+      addMessage("Sin Acceso a Internet. Conéctate y Recarga la Página");
+      clearInterval(load);
+    }
+    return console.log("Loading…")}
+  changeSoundfont("acoustic_grand_piano");
+  document.getElementById("search").value = "acoustic_grand_piano";
+  document.getElementById("changer").addEventListener("click", () => {changeSoundfont(document.getElementById("search").value)});
+  clearInterval(load)
+}, 1000)
 function screenFull(){
   let box = document.getElementById("check").classList
   if(box.contains("true")){
@@ -58,20 +90,22 @@ function changeOctave(up){
   }
   document.getElementById("counter").textContent = octave
 }
+var playing;
 function playNote(key){
-  if (!piano) return alert("Aún cargando el soundfont");
+  key = key.toLowerCase();
+  if (!piano){return addMessage("Soundfont Pendiente")}
   ac.resume().then( () => {if (notes[key] && piano){ 
-    if(key === "k"){piano.play(notes[key] + (octave + 1))}
-    else{piano.play(notes[key] + octave)}
+    if(key === "k"){playing = piano.play(notes[key] + (octave + 1))}
+    else{playing = piano.play(notes[key] + octave)}
     document.getElementById(key).classList.add("active");
   }})
 }
 function stopNote(key){
+  playing.stop(ac.currentTime + 0.2);
   document.getElementById(key).classList.remove("active");
-  piano.stop(notes[key]);
 }
-window.addEventListener("keydown", () => {playNote(e.key.toLowerCase())});
-window.addEventListener("keyup", () => {stopNote(e.key.toLowerCase())});
+window.addEventListener("keydown", () => {playNote(e.key)});
+window.addEventListener("keyup", () => {stopNote(e.key)});
 for(let x = 0; x < tiles.length; x++){
   tiles[x].addEventListener("touchstart", (e) => {
     e.preventDefault();
