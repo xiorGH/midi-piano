@@ -40,9 +40,7 @@ body{
   font-size: 3vh;
   border: 1px solid gray;
 }
-#eight{
-  display: flex;
-}
+#eight{display: flex}
 #eight button, #counter{
   width: 3.5vw;
   height: 3.5vw;
@@ -51,12 +49,13 @@ body{
   line-height: 3.5vw;
   vertical-align: bottom;
   font-family: sans-serif;
-  border: 1px solid gray
+  border: 1px solid gray;
+  display: inline-block;
 }
 #counter{
-  display: inline-block;
   background: white;
   width: 8vw;
+  height: 3.35vw;
 }
 #message{
   margin: 0;
@@ -71,7 +70,7 @@ body{
   background: #AAF;
 }
 #message.show{top: 0}
-button[onclick]:active, #changer:active{
+button:active{
   background: #DDF;
   color: #009
 }
@@ -85,12 +84,13 @@ button[onclick]:active, #changer:active{
 .key{ 
   text-align: center;
   align-content: end;
-  font-size: 400%;
+  width: calc(100% / 15);
+  font-size: 4vw;
   font-family: serif}
 .white{
   background: white;
-  width: 12.5%;
-  outline: 1px solid black
+  outline: 1px solid black;
+  position: relative;
 }
 .black.active{
   background: #006;
@@ -99,16 +99,60 @@ button[onclick]:active, #changer:active{
 .black{
   background: black;
   position: absolute;
-  height: 40%;
-  width: 6.25%;
-  color: white
+  height: 60%;
+  width: 60%;
+  color: white;
+  right: -30%;
+  top: 0;
+  z-index: 2
 }
 .white.active{
   background: #ccf;
   color: #113
 }
-#w{left: 9.375%}
-#e{left: 21.875%}
-#t{left: 46.875%}
-#y{left: 59.375%}
-#u{left: 71.875%}
+
+@media (orientation: portrait){
+  #piano-header{height: 30%}
+  #keys{height: 70%}
+  .key{
+    width: calc(100% / 7);
+    height: 40%;
+    font-size: 8vw;
+  }
+  #l{
+    width: 100%;
+    height: 20%
+  }
+  .black{
+    width: 80%;
+    height: 60%;
+    right: -40%
+  }
+  #list{
+    order: 0;
+    width: 100%
+  }
+  #fs{
+    order: 1;
+    width: 40%
+  }
+  #tag{
+    font-size: 7vw
+  }
+  #eight{
+    order: 2;
+    width: 30%
+  }
+  #eight button{
+    width: 6vw;
+    height: 6vw;
+  }
+  #counter{
+    width: 14vw;
+    height: 5.85vw;
+    line-height: 5.85vw
+  }
+  #message{
+    font-size: 4vw
+  }
+}

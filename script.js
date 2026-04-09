@@ -11,6 +11,7 @@ fetch("https://raw.githubusercontent.com/danigb/soundfont-player/master/names/fl
   for(let x = 0; x < instruments.length; x++){document.getElementById("sound").innerHTML += `<option>${instruments[x]}</option>`;
   }
 })
+
 function addMessage(txt){
   let msg = document.getElementById("message");
   var time;
@@ -48,7 +49,10 @@ const load = setInterval(() => {
   document.getElementById("search").value = "acoustic_grand_piano";
   document.getElementById("search").addEventListener("keydown", (e) => {if(e.key === "Enter"){changeSoundfont(document.getElementById("search").value)}})
   document.getElementById("changer").addEventListener("click", () => {changeSoundfont(document.getElementById("search").value)});
-  clearInterval(load)
+  clearInterval(load);
+  if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  addMessage("Si estás usando un Móvil, Recomiendo usar la Interfaz Vertical")
+}
 }, 1000)
 function screenFull(){
   let box = document.getElementById("check").classList
@@ -64,40 +68,51 @@ function screenFull(){
   }
 }
 const notes = {
-  a: "C",
-  w: "C#",
-  s: "D",
-  e: "D#",
-  d: "E",
-  f: "F",
-  t: "F#",
-  g: "G",
-  y: "G#",
-  h: "A",
-  u: "A#",
-  j: "B",
-  k: "C"
+  Nq: {char: "C", num: 0},
+  N1: {char: "C#", num: 0},
+  Na: {char: "D", num: 0},
+  N2: {char: "D#", num: 0},
+  Nw: {char: "E", num: 0},
+  Ns: {char: "F", num: 0},
+  N3: {char: "F#", num: 0},
+  Ne: {char: "G", num: 0},
+  N4: {char: "G#", num: 0},
+  Nd: {char: "A", num: 0},
+  N5: {char: "A#", num: 0},
+  Nr: {char: "B", num: 0},
+  Ny: {char: "C", num: 1},
+  N6: {char: "C#", num: 1},
+  Nh: {char: "D", num: 1},
+  N7: {char: "D#", num: 1},
+  Nu: {char: "E", num: 1},
+  Nj: {char: "F", num: 1},
+  N8: {char: "F#", num: 1},
+  Ni: {char: "G", num: 1},
+  N9: {char: "G#", num: 1},
+  Nk: {char: "A", num: 1},
+  N0: {char: "A#", num: 1},
+  No: {char: "B", num: 1},
+  Nl: {char: "C", num: 2},
 };
 let tiles = document.querySelectorAll(".key");
 function changeOctave(up){
   if(up){
-    if(octave === 7){octave = 1}
+    if(octave === 6){octave = 1}
     else{octave++}
   }
   else{
-    if(octave === 1){octave = 7}
+    if(octave === 1){octave = 6}
     else{octave--}
   }
-  document.getElementById("counter").textContent = octave
+  document.getElementById("counter").textContent = octave + "/" + (octave + 1)
 }
 const playing = [];
 function playNote(key){
   key = key.toLowerCase();
+  let nkey = "N" + key;
   if (!piano){return addMessage("Soundfont Pendiente")}
-  ac.resume().then( () => {if (notes[key] && piano){ 
-    var id;
-    if(key === "k"){id = notes[key] + (octave + 1)}
-    else{id = notes[key] + octave}
+  ac.resume().then( () => {if (notes[nkey] && piano){
+    let id = notes[nkey].char + (octave + notes[nkey].num)
     const note = piano.play(id);
     note.id = id;
     playing.push(note)
@@ -105,9 +120,9 @@ function playNote(key){
   }})
 }
 function stopNote(key){
-  var id;
-  if(key === "k"){id = notes[key] + (octave + 1)}
-  else{id = notes[key] + octave}
+  key = key.toLowerCase();
+  let nkey = "N" + key;
+  let id = notes[nkey].char + (octave + notes[nkey].num)
   var note;
   for(let x = 0; x < playing.length; x++){
     if(playing[x].id === id){
@@ -121,6 +136,10 @@ function stopNote(key){
 }
 window.addEventListener("keydown", (e) => {playNote(e.key)})
 window.addEventListener("keyup", (e) => {stopNote(e.key)});
+window.addEventListener("keydown", (e) => {
+  if(e.key === "left"){changeOctave(false)}
+  else if(e.key === "right"){changeOctave(true)}
+})
 // Objeto para rastrear qué tecla tiene cada dedo (soporta múltiples dedos)
 let activeTouches = {}; 
 
@@ -177,7 +196,7 @@ keysContainer.addEventListener("touchend", (e) => {
       delete activeTouches[touch.identifier];
     }
   }
-});
+})
 
 keysContainer.addEventListener("touchcancel", (e) => {
   // Maneja interrupciones (como una notificación o salir de la app)
