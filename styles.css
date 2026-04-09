@@ -99,10 +99,10 @@ button:active{
 .black{
   background: black;
   position: absolute;
-  height: 60%;
-  width: 60%;
+  height: 70%;
+  width: 80%;
   color: white;
-  right: -30%;
+  right: -40%;
   top: 0;
   z-index: 2
 }
